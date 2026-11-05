@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="jf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#AA5CC3"/>
+      <stop offset="1" stop-color="#00A4DC"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#jf)"/>
+  <!-- clapperboard -->
+  <g fill="#ffffff">
+    <path d="M112 214 H400 V376 a24 24 0 0 1 -24 24 H136 a24 24 0 0 1 -24 -24 Z"/>
+    <path d="M108 150 L380 104 a16 16 0 0 1 18 13 L404 152 L120 200 L114 168 a16 16 0 0 1 -6 -18 Z"/>
+  </g>
+  <g fill="url(#jf)">
+    <path d="M168 141 L214 133 L190 186 L144 194 Z"/>
+    <path d="M260 125 L306 117 L282 170 L236 178 Z"/>
+    <path d="M352 109 L392 102 L398 136 L374 154 L328 162 Z"/>
+  </g>
+  <!-- plus badge -->
+  <circle cx="256" cy="304" r="58" fill="url(#jf)"/>
+  <rect x="246" y="270" width="20" height="68" rx="6" fill="#ffffff"/>
+  <rect x="222" y="294" width="68" height="20" rx="6" fill="#ffffff"/>
+</svg>

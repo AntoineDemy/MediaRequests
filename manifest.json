@@ -1,0 +1,45 @@
+[
+  {
+    "guid": "3c9a7e52-6f1d-4b8e-9a2f-5d7c1e8b4a60",
+    "name": "Media Requests",
+    "description": "Les utilisateurs cherchent un film ou une série (TMDB) et en font la demande à l'admin, qui est notifié dans Jellyfin et sur ntfy.",
+    "overview": "Demandes de films et séries pour les utilisateurs de ton serveur Jellyfin",
+    "owner": "Antoine Demy",
+    "category": "General",
+    "imageUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/icon.png",
+    "versions": [
+      {
+        "version": "1.0.0.0",
+        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
+        "targetAbi": "12.0.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-12.0.0.zip",
+        "checksum": "70b7ed89af65c6456a88ff9fe7c6fbab",
+        "timestamp": "2026-11-05T14:27:05Z"
+      },
+      {
+        "version": "1.0.0.0",
+        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
+        "targetAbi": "10.11.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.11.0.zip",
+        "checksum": "2dd3f98a445e0610a0b422494b936abb",
+        "timestamp": "2026-11-05T14:27:05Z"
+      },
+      {
+        "version": "1.0.0.0",
+        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
+        "targetAbi": "10.10.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.10.0.zip",
+        "checksum": "851ccdecd2b20c110287138429bd96d8",
+        "timestamp": "2026-11-05T14:27:05Z"
+      },
+      {
+        "version": "1.0.0.0",
+        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
+        "targetAbi": "10.9.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.9.0.zip",
+        "checksum": "c5189a39cdc28a47e87b0c12e9dd9c1e",
+        "timestamp": "2026-11-05T14:27:05Z"
+      }
+    ]
+  }
+]

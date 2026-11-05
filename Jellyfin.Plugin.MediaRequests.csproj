@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Build for a given Jellyfin release line: dotnet build -p:JellyfinVersion=10.11.0 -->
+  <PropertyGroup>
+    <JellyfinVersion Condition="'$(JellyfinVersion)' == ''">10.9.0</JellyfinVersion>
+    <JellyfinMajorMinor>$([System.Version]::Parse('$(JellyfinVersion)').ToString(2))</JellyfinMajorMinor>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition="'$(JellyfinMajorMinor)' == '10.11'">net9.0</TargetFramework>
+    <TargetFramework Condition="$([System.Version]::Parse('$(JellyfinVersion)').Major) &gt;= 12">net10.0</TargetFramework>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Authors>Antoine Demy</Authors>
+    <Copyright>Copyright (c) 2026 Antoine Demy</Copyright>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Jellyfin.Controller" Version="$(JellyfinVersion)" />
+    <PackageReference Include="Jellyfin.Model" Version="$(JellyfinVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Configuration\configPage.html" />
+    <None Remove="Configuration\request.html" />
+    <None Remove="Configuration\requests.js" />
+    <EmbeddedResource Include="Configuration\configPage.html" />
+    <EmbeddedResource Include="Configuration\request.html" />
+    <!-- build.sh writes a minified copy to out/min; plain dotnet builds embed the readable source. -->
+    <EmbeddedResource Include="Configuration\requests.js" Condition="!Exists('out\min\requests.js')" />
+    <EmbeddedResource Include="out\min\requests.js" LogicalName="Jellyfin.Plugin.MediaRequests.Configuration.requests.js" Condition="Exists('out\min\requests.js')" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="out\**;releases\**" />
+  </ItemGroup>
+
+</Project>

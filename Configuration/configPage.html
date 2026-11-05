@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Demandes</title>
+</head>
+<body>
+<div id="MediaRequestsConfigPage" data-role="page" class="page type-interior pluginConfigurationPage"
+     data-require="emby-input,emby-button,emby-checkbox">
+    <div data-role="content">
+        <div class="content-primary">
+
+            <style>
+                .mr-section { margin-bottom: 2.5em; }
+                .mr-link { display: flex; gap: .5em; align-items: center; flex-wrap: wrap; }
+                .mr-link code { background: rgba(255,255,255,.08); padding: .4em .7em; border-radius: 6px; word-break: break-all; }
+                .mr-list { display: flex; flex-direction: column; gap: .7em; }
+                .mr-row { display: flex; gap: 1em; align-items: center; background: rgba(255,255,255,.05); border-radius: 8px; padding: .6em; }
+                .mr-row img, .mr-row .mr-ph { width: 46px; height: 69px; object-fit: cover; border-radius: 4px; background: rgba(255,255,255,.08); flex: none; }
+                .mr-meta { flex: 1; min-width: 0; }
+                .mr-meta .mr-title { font-weight: 600; }
+                .mr-meta .mr-sub { opacity: .7; font-size: .88em; margin-top: .2em; }
+                .mr-meta .mr-note { font-style: italic; opacity: .85; font-size: .9em; margin-top: .3em; }
+                .mr-actions { display: flex; gap: .4em; flex-wrap: wrap; justify-content: flex-end; }
+                .mr-actions .raised { margin: 0; }
+                .mr-status { font-weight: 600; font-size: .9em; white-space: nowrap; }
+                .mr-Pending { color: #d29922; } .mr-Approved { color: #00a4dc; }
+                .mr-Denied { color: #f85149; } .mr-Available { color: #3fb950; }
+                .mr-filters { display: flex; gap: .5em; margin-bottom: 1em; flex-wrap: wrap; }
+                .mr-filters .emby-button { margin: 0; }
+                .mr-filters .mr-active { background: #00a4dc !important; color: #fff !important; }
+            </style>
+
+            <div class="mr-section">
+                <h2 class="sectionTitle">Demandes de films et séries</h2>
+                <div class="fieldDescription" style="margin-bottom:1em">Lien à envoyer à tes utilisateurs :</div>
+                <div class="mr-link">
+                    <code id="mrPublicLink"></code>
+                    <button is="emby-button" type="button" class="raised" id="mrCopyLink"><span>Copier</span></button>
+                </div>
+            </div>
+
+            <div class="mr-section">
+                <div class="mr-filters">
+                    <button is="emby-button" type="button" class="raised mr-active" data-filter="Pending"><span>En attente</span></button>
+                    <button is="emby-button" type="button" class="raised" data-filter="Approved"><span>Acceptées</span></button>
+                    <button is="emby-button" type="button" class="raised" data-filter="Available"><span>Disponibles</span></button>
+                    <button is="emby-button" type="button" class="raised" data-filter="Denied"><span>Refusées</span></button>
+                    <button is="emby-button" type="button" class="raised" data-filter="all"><span>Toutes</span></button>
+                </div>
+                <div id="mrRequests" class="mr-list"></div>
+            </div>
+
+            <form id="MediaRequestsConfigForm">
+                <h2 class="sectionTitle">Réglages</h2>
+
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="TmdbApiKey">Clé API TMDB</label>
+                    <input id="TmdbApiKey" name="TmdbApiKey" type="text" is="emby-input" autocomplete="off" />
+                    <div class="fieldDescription">Gratuite sur themoviedb.org, dans Paramètres puis API. Clé v3 ou jeton de lecture v4.</div>
+                </div>
+
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="Language">Langue des résultats</label>
+                    <input id="Language" name="Language" type="text" is="emby-input" />
+                    <div class="fieldDescription">Ex. fr-FR, en-US.</div>
+                </div>
+
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="MaxPendingPerUser">Demandes en attente max par utilisateur</label>
+                    <input id="MaxPendingPerUser" name="MaxPendingPerUser" type="number" min="1" max="100" is="emby-input" />
+                </div>
+
+                <div class="checkboxContainer checkboxContainer-withDescription">
+                    <label class="emby-checkbox-label">
+                        <input id="NotifyAdminSessions" name="NotifyAdminSessions" type="checkbox" is="emby-checkbox" />
+                        <span>Afficher une notification dans Jellyfin</span>
+                    </label>
+                    <div class="fieldDescription checkboxFieldDescription">Popup sur tes sessions admin ouvertes à chaque nouvelle demande.</div>
+                </div>
+
+                <h3 class="sectionTitle" style="margin-top:2em">Notification téléphone (optionnel, ntfy)</h3>
+
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="NtfyServer">Serveur ntfy</label>
+                    <input id="NtfyServer" name="NtfyServer" type="text" is="emby-input" />
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="NtfyTopic">Topic ntfy</label>
+                    <input id="NtfyTopic" name="NtfyTopic" type="text" is="emby-input" autocomplete="off" />
+                    <div class="fieldDescription">Vide = désactivé. Choisis un nom difficile à deviner.</div>
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="NtfyToken">Token ntfy</label>
+                    <input id="NtfyToken" name="NtfyToken" type="text" is="emby-input" autocomplete="off" />
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="PublicServerUrl">URL publique de Jellyfin</label>
+                    <input id="PublicServerUrl" name="PublicServerUrl" type="text" is="emby-input" />
+                    <div class="fieldDescription">Ex. https://jellyfin.mondomaine.fr. Active les boutons Accepter/Refuser dans la notif ntfy.</div>
+                </div>
+
+                <div>
+                    <button is="emby-button" type="submit" class="raised button-submit block emby-button">
+                        <span>Enregistrer</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        (function () {
+            var pluginId = '3c9a7e52-6f1d-4b8e-9a2f-5d7c1e8b4a60';
+            var page = document.querySelector('#MediaRequestsConfigPage');
+            var IMG = 'https://image.tmdb.org/t/p/w154';
+            var LABELS = { Pending: 'En attente', Approved: 'Acceptée', Denied: 'Refusée', Available: 'Disponible' };
+            var textFields = ['TmdbApiKey', 'Language', 'NtfyServer', 'NtfyTopic', 'NtfyToken', 'PublicServerUrl'];
+            var filter = 'Pending';
+            var requests = [];
+
+            function esc(s) {
+                return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+                });
+            }
+
+            function publicLink(cfg) {
+                var base = (cfg && cfg.PublicServerUrl) ? cfg.PublicServerUrl.replace(/\/+$/, '') : ApiClient.serverAddress();
+                return base + '/MediaRequests/Page';
+            }
+
+            function loadConfig() {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(pluginId).then(function (cfg) {
+                    textFields.forEach(function (f) { page.querySelector('#' + f).value = cfg[f] || ''; });
+                    page.querySelector('#MaxPendingPerUser').value = cfg.MaxPendingPerUser || 5;
+                    page.querySelector('#NotifyAdminSessions').checked = cfg.NotifyAdminSessions !== false;
+                    page.querySelector('#mrPublicLink').textContent = publicLink(cfg);
+                    Dashboard.hideLoadingMsg();
+                });
+            }
+
+            function loadRequests() {
+                ApiClient.fetch({ url: ApiClient.getUrl('MediaRequests/All'), type: 'GET', dataType: 'json' })
+                    .then(function (list) { requests = list || []; render(); })
+                    .catch(function () { page.querySelector('#mrRequests').innerHTML = '<div>Impossible de charger les demandes.</div>'; });
+            }
+
+            function render() {
+                var list = filter === 'all' ? requests : requests.filter(function (r) { return r.status === filter; });
+                var el = page.querySelector('#mrRequests');
+                if (!list.length) {
+                    el.innerHTML = '<div class="fieldDescription">Aucune demande.</div>';
+                    return;
+                }
+                el.innerHTML = list.map(function (r) {
+                    var img = r.posterPath ? '<img src="' + IMG + esc(r.posterPath) + '" alt="">' : '<div class="mr-ph"></div>';
+                    var tmdbUrl = 'https://www.themoviedb.org/' + (r.mediaType === 'tv' ? 'tv/' : 'movie/') + r.tmdbId;
+                    var buttons = '';
+                    if (r.status === 'Pending') {
+                        buttons += '<button is="emby-button" type="button" class="raised button-submit" data-act="Approve" data-id="' + r.id + '"><span>Accepter</span></button>';
+                        buttons += '<button is="emby-button" type="button" class="raised" data-act="Deny" data-id="' + r.id + '"><span>Refuser</span></button>';
+                    } else if (r.status === 'Available' && r.jellyfinId) {
+                        buttons += '<a is="emby-linkbutton" class="raised emby-button" href="#/details?id=' + esc(r.jellyfinId) + '"><span>Ouvrir</span></a>';
+                    }
+                    buttons += '<button is="emby-button" type="button" class="raised" data-act="Delete" data-id="' + r.id + '" title="Supprimer"><span>🗑</span></button>';
+                    return '<div class="mr-row">' + img +
+                        '<div class="mr-meta"><div class="mr-title"><a href="' + tmdbUrl + '" target="_blank" rel="noopener">' + esc(r.title) + '</a>' +
+                        (r.year ? ' (' + esc(r.year) + ')' : '') + '</div>' +
+                        '<div class="mr-sub">' + (r.mediaType === 'tv' ? 'Série' : 'Film') + ' · par ' + esc(r.userName) + ' · ' +
+                        new Date(r.createdAt).toLocaleString('fr-FR') + ' · <span class="mr-status mr-' + esc(r.status) + '">' + esc(LABELS[r.status] || r.status) + '</span></div>' +
+                        (r.note ? '<div class="mr-note">« ' + esc(r.note) + ' »</div>' : '') +
+                        '</div><div class="mr-actions">' + buttons + '</div></div>';
+                }).join('');
+            }
+
+            page.querySelector('#mrRequests').addEventListener('click', function (e) {
+                var btn = e.target.closest('[data-act]');
+                if (!btn) return;
+                var act = btn.getAttribute('data-act');
+                var id = btn.getAttribute('data-id');
+                btn.disabled = true;
+                var req = act === 'Delete'
+                    ? ApiClient.ajax({ type: 'DELETE', url: ApiClient.getUrl('MediaRequests/' + id) })
+                    : ApiClient.ajax({ type: 'POST', url: ApiClient.getUrl('MediaRequests/' + id + '/' + act) });
+                req.then(loadRequests, function () {
+                    btn.disabled = false;
+                    Dashboard.alert('Action impossible.');
+                });
+            });
+
+            page.querySelectorAll('[data-filter]').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    filter = b.getAttribute('data-filter');
+                    page.querySelectorAll('[data-filter]').forEach(function (x) { x.classList.toggle('mr-active', x === b); });
+                    render();
+                });
+            });
+
+            page.querySelector('#mrCopyLink').addEventListener('click', function () {
+                var link = page.querySelector('#mrPublicLink').textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(link).then(function () { Dashboard.alert('Lien copié'); });
+                }
+            });
+
+            page.addEventListener('pageshow', function () {
+                loadConfig();
+                loadRequests();
+            });
+
+            page.querySelector('#MediaRequestsConfigForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(pluginId).then(function (cfg) {
+                    textFields.forEach(function (f) { cfg[f] = page.querySelector('#' + f).value.trim(); });
+                    cfg.MaxPendingPerUser = parseInt(page.querySelector('#MaxPendingPerUser').value, 10) || 5;
+                    cfg.NotifyAdminSessions = page.querySelector('#NotifyAdminSessions').checked;
+                    ApiClient.updatePluginConfiguration(pluginId, cfg).then(function (result) {
+                        page.querySelector('#mrPublicLink').textContent = publicLink(cfg);
+                        Dashboard.processPluginConfigurationUpdateResult(result);
+                    });
+                });
+                return false;
+            });
+        })();
+    </script>
+</div>
+</body>
+</html>
