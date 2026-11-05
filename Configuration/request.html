@@ -9,11 +9,12 @@
   :root {
     --bg: #101010; --panel: #1c1c1e; --panel2: #262628; --text: #f2f2f2; --muted: #9a9aa0;
     --accent: #aa5cc3; --accent2: #00a4dc; --ok: #3fb950; --warn: #d29922; --bad: #f85149;
-    --radius: 12px;
+    --radius: 12px; --border: #333;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--bg); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  html { min-height: 100%; background: var(--bg); background-image: var(--bg-image, none); background-attachment: fixed; }
+  body { margin: 0; color: var(--text); font-family: var(--font); }
   button, input, textarea { font: inherit; color: inherit; }
   .wrap { max-width: 1100px; margin: 0 auto; padding: 16px 16px 60px; }
   header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
@@ -28,7 +29,7 @@
   .login p { margin: 0 0 18px; color: var(--muted); font-size: .92rem; }
   label { display: block; font-size: .85rem; color: var(--muted); margin: 12px 0 6px; }
   input[type=text], input[type=password], input[type=search], textarea {
-    width: 100%; background: var(--panel2); border: 1px solid #333; border-radius: 10px;
+    width: 100%; background: var(--panel2); border: 1px solid var(--border); border-radius: 10px;
     padding: 12px 14px; outline: none; }
   input:focus, textarea:focus { border-color: var(--accent); }
   .btn { background: var(--accent); border: 0; border-radius: 10px; padding: 11px 16px;
@@ -39,7 +40,7 @@
   .err { color: var(--bad); font-size: .9rem; margin-top: 12px; min-height: 1.2em; }
   .tabs { display: flex; gap: 6px; margin-bottom: 14px; }
   .tab { background: var(--panel); border: 0; border-radius: 999px; padding: 8px 16px; cursor: pointer; color: var(--muted); }
-  .tab.active { background: var(--text); color: #111; font-weight: 600; }
+  .tab.active { background: var(--text); color: var(--bg); font-weight: 600; }
   .tab .count { background: var(--accent); color: #fff; border-radius: 999px; padding: 1px 7px; font-size: .75rem; margin-left: 6px; }
   .search { position: relative; margin-bottom: 18px; }
   .search input { padding-left: 42px; font-size: 1.05rem; height: 50px; }
@@ -49,7 +50,7 @@
   .poster { aspect-ratio: 2/3; background: var(--panel2) center/cover no-repeat; position: relative; }
   .poster .noimg { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: .85rem; padding: 10px; text-align: center; }
   .badge { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,.72); backdrop-filter: blur(4px);
-    padding: 3px 8px; border-radius: 6px; font-size: .72rem; font-weight: 600; }
+    padding: 3px 8px; border-radius: 6px; font-size: .72rem; font-weight: 600; color: #fff; }
   .info { padding: 10px 10px 12px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .title { font-weight: 600; font-size: .92rem; line-height: 1.25; }
   .year { color: var(--muted); font-weight: 400; }
@@ -70,14 +71,14 @@
   .line .meta .sub { color: var(--muted); font-size: .82rem; margin-top: 3px; }
   .line .status { white-space: nowrap; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(120px);
-    background: var(--text); color: #111; padding: 12px 18px; border-radius: 10px; font-weight: 600;
+    background: var(--text); color: var(--bg); padding: 12px 18px; border-radius: 10px; font-weight: 600;
     transition: transform .25s; max-width: 90vw; z-index: 10; }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .toast.bad { background: var(--bad); color: #fff; }
   .hidden { display: none !important; }
   .embedded header { display: none; }
   .embedded .wrap { padding-top: 6px; }
-  .spinner { width: 26px; height: 26px; border: 3px solid #333; border-top-color: var(--accent); border-radius: 50%;
+  .spinner { width: 26px; height: 26px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%;
     animation: spin .8s linear infinite; margin: 40px auto; }
   @keyframes spin { to { transform: rotate(360deg); } }
   @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
@@ -149,7 +150,74 @@
     }
   } catch (e) { parentApi = null; }
   var embedded = !!parentApi;
-  if (embedded) document.documentElement.classList.add('embedded');
+  if (embedded) {
+    document.documentElement.classList.add('embedded');
+    adoptJellyfinTheme();
+  }
+
+  // Reprend les couleurs, la police et le fond du thème Jellyfin actif (thème de base ou CSS personnalisé).
+  function adoptJellyfinTheme() {
+    try {
+      var pd = window.parent.document;
+      var rootStyle = window.parent.getComputedStyle(pd.documentElement);
+      var bodyStyle = window.parent.getComputedStyle(pd.body);
+      var style = document.documentElement.style;
+      var jf = function (name) { return rootStyle.getPropertyValue('--jf-palette-' + name).trim(); };
+      var set = function (name, value) {
+        if (value && value !== 'transparent' && value !== 'rgba(0, 0, 0, 0)') style.setProperty(name, value);
+      };
+
+      var paper = jf('background-paper');
+      set('--bg', jf('background-default') || bodyStyle.backgroundColor);
+      set('--panel', paper);
+      set('--panel2', paper && 'color-mix(in srgb, ' + paper + ', #fff 8%)');
+      set('--text', jf('text-primary') || bodyStyle.color);
+      set('--muted', jf('text-secondary'));
+      set('--accent', jf('primary-main'));
+      set('--accent2', jf('secondary-main') || jf('primary-main'));
+      set('--border', jf('divider'));
+      set('--font', bodyStyle.fontFamily);
+
+      // Fond en dégradé du thème (les images de fond, elles, sont propres à chaque page de Jellyfin).
+      var bgImage = rootStyle.backgroundImage !== 'none' ? rootStyle.backgroundImage : bodyStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none' && bgImage.indexOf('url(') === -1) set('--bg-image', bgImage);
+
+      copyFonts(pd);
+    } catch (e) { /* on garde le thème par défaut */ }
+  }
+
+  // Importe les polices du thème (règles @font-face et feuilles de polices type Google Fonts).
+  function copyFonts(pd) {
+    var css = [];
+    var seen = {};
+    var walk = function (sheet, depth) {
+      var rules;
+      try { rules = sheet.cssRules; } catch (e) { return; } // feuille d'un autre domaine : illisible
+      if (!rules || depth > 4) return;
+      for (var i = 0; i < rules.length; i++) {
+        var r = rules[i];
+        if (r.type === 5) { // CSSFontFaceRule
+          css.push(r.cssText);
+        } else if (r.type === 3 && r.href && !seen[r.href]) { // CSSImportRule
+          seen[r.href] = true;
+          if (/font/i.test(r.href)) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = r.href;
+            document.head.appendChild(link);
+          } else if (r.styleSheet) {
+            walk(r.styleSheet, depth + 1);
+          }
+        }
+      }
+    };
+    for (var i = 0; i < pd.styleSheets.length; i++) walk(pd.styleSheets[i], 0);
+    if (css.length) {
+      var el = document.createElement('style');
+      el.textContent = css.join('\n');
+      document.head.appendChild(el);
+    }
+  }
 
   function call(fn, fallback) {
     try { var v = fn(); return v == null ? fallback : v; } catch (e) { return fallback; }

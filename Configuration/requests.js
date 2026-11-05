@@ -6,6 +6,9 @@
 
   var LABEL = 'Demander un film ou une série';
   var scheduled = false;
+  // Couleurs du thème Jellyfin actif (variables définies par les thèmes de jellyfin-web 10.10+).
+  var BG = 'var(--jf-palette-background-default, #101010)';
+  var FG = 'var(--jf-palette-text-primary, #fff)';
 
   function api() { return window.ApiClient; }
 
@@ -25,18 +28,18 @@
 
     ov = document.createElement('div');
     ov.id = 'mrOverlay';
-    ov.style.cssText = 'position:fixed;inset:0;z-index:100000;background:#101010;display:none;flex-direction:column;';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:100000;background:' + BG + ';display:none;flex-direction:column;';
 
     var bar = document.createElement('div');
     bar.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:6px 10px;' +
-      'padding-top:max(6px, env(safe-area-inset-top));background:#101010;color:#fff;font-weight:600;';
+      'padding-top:max(6px, env(safe-area-inset-top));background:' + BG + ';color:' + FG + ';font-weight:600;';
     bar.innerHTML = '<span style="padding-left:6px">' + LABEL + '</span>';
 
     var close = document.createElement('button');
     close.type = 'button';
     close.title = 'Fermer';
     close.setAttribute('aria-label', 'Fermer');
-    close.style.cssText = 'background:none;border:0;color:#fff;cursor:pointer;padding:8px;display:flex;';
+    close.style.cssText = 'background:none;border:0;color:inherit;cursor:pointer;padding:8px;display:flex;';
     close.innerHTML = '<span class="material-icons close" aria-hidden="true"></span>';
     close.addEventListener('click', hide);
     bar.appendChild(close);
@@ -44,7 +47,7 @@
     var frame = document.createElement('iframe');
     frame.id = 'mrFrame';
     frame.title = LABEL;
-    frame.style.cssText = 'flex:1;border:0;width:100%;background:#101010;';
+    frame.style.cssText = 'flex:1;border:0;width:100%;background:' + BG + ';';
 
     ov.appendChild(bar);
     ov.appendChild(frame);
