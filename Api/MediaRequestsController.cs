@@ -146,6 +146,22 @@ namespace Jellyfin.Plugin.MediaRequests.Api
 
         // ---------- Admin ----------
 
+        /// <summary>Envoie un événement "test" au webhook avec les réglages enregistrés.</summary>
+        [HttpPost("TestWebhook")]
+        [Authorize(Policy = Policies.RequiresElevation)]
+        public async Task<ActionResult> TestWebhook([FromServices] WebhookSender webhook, CancellationToken ct)
+        {
+            try
+            {
+                await webhook.SendAsync(WebhookSender.Test, null, ct).ConfigureAwait(false);
+                return Ok(new { message = "Webhook reçu par le service." });
+            }
+            catch (Exception ex) when (ex is HttpRequestException or InvalidOperationException or TaskCanceledException)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         /// <summary>Nombre de demandes en attente (badge et rappel admin dans l'interface web).</summary>
         [HttpGet("PendingCount")]
         [Authorize(Policy = Policies.RequiresElevation)]

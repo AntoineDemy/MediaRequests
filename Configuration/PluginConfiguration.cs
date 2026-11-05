@@ -27,5 +27,11 @@ namespace Jellyfin.Plugin.MediaRequests.Configuration
 
         /// <summary>Token ntfy (optionnel).</summary>
         public string NtfyToken { get; set; } = string.Empty;
+
+        /// <summary>URL appelée à chaque événement (nouvelle demande, acceptée, refusée). Vide = désactivé.</summary>
+        public string WebhookUrl { get; set; } = string.Empty;
+
+        /// <summary>Secret partagé pour signer les webhooks (HMAC-SHA256).</summary>
+        public string WebhookSecret { get; set; } = string.Empty;
     }
 }

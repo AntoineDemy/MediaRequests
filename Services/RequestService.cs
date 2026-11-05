@@ -11,13 +11,15 @@ namespace Jellyfin.Plugin.MediaRequests.Services
         private readonly RequestStore _store;
         private readonly LibraryIndex _library;
         private readonly Notifier _notifier;
+        private readonly WebhookSender _webhook;
         private readonly ILogger<RequestService> _logger;
 
-        public RequestService(RequestStore store, LibraryIndex library, Notifier notifier, ILogger<RequestService> logger)
+        public RequestService(RequestStore store, LibraryIndex library, Notifier notifier, WebhookSender webhook, ILogger<RequestService> logger)
         {
             _store = store;
             _library = library;
             _notifier = notifier;
+            _webhook = webhook;
             _logger = logger;
         }
 
@@ -95,24 +97,38 @@ namespace Jellyfin.Plugin.MediaRequests.Services
             {
                 _logger.LogInformation("[MediaRequests] {User} a demandé {Title} ({Type} {TmdbId})",
                     userName, request.Title, request.MediaType, request.TmdbId);
-                await _notifier.NotifyNewRequestAsync(request).ConfigureAwait(false);
+                // En arrière-plan : un service de notification lent ne doit pas bloquer la réponse à l'utilisateur.
+            _ = Task.Run(() => _notifier.NotifyNewRequestAsync(request));
+            _webhook.Fire(WebhookSender.Created, request);
             }
 
             return (request, error);
         }
 
-        public Task<MediaRequest?> SetStatusAsync(Guid id, RequestStatus status) =>
-            _store.UpdateAsync(list =>
+        public async Task<MediaRequest?> SetStatusAsync(Guid id, RequestStatus status)
+        {
+            var changed = false;
+            var request = await _store.UpdateAsync(list =>
             {
                 var r = list.FirstOrDefault(x => x.Id == id);
                 if (r is not null && r.Status != status)
                 {
                     r.Status = status;
                     r.DecidedAt = DateTime.UtcNow;
+                    changed = true;
                 }
 
                 return r;
-            });
+            }).ConfigureAwait(false);
+
+            // Un seul événement par changement réel (dashboard, ntfy ou pont : peu importe d'où vient la décision).
+            if (changed && request is not null)
+            {
+                _webhook.Fire(status == RequestStatus.Approved ? WebhookSender.Approved : WebhookSender.Denied, request);
+            }
+
+            return request;
+        }
 
         public Task<bool> DeleteAsync(Guid id) =>
             _store.UpdateAsync(list => list.RemoveAll(r => r.Id == id) > 0);

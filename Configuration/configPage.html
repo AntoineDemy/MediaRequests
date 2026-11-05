@@ -100,6 +100,26 @@
                     <div class="fieldDescription">Ex. https://jellyfin.mondomaine.fr. Active les boutons Accepter/Refuser dans la notif ntfy.</div>
                 </div>
 
+                <h3 class="sectionTitle" style="margin-top:2em">Webhook (optionnel, pour un service externe)</h3>
+                <div class="fieldDescription" style="margin-bottom:1em">
+                    Appelé à chaque nouvelle demande, acceptation ou refus (ex. pont WhatsApp + Jellyseerr). Vide = désactivé.
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="WebhookUrl">URL du webhook</label>
+                    <input id="WebhookUrl" name="WebhookUrl" type="text" is="emby-input" placeholder="http://192.168.1.80:8080/plugin" />
+                </div>
+                <div class="inputContainer">
+                    <label class="inputLabel inputLabelUnfocused" for="WebhookSecret">Secret du webhook</label>
+                    <input id="WebhookSecret" name="WebhookSecret" type="password" is="emby-input" autocomplete="off" />
+                    <div class="fieldDescription">Le même que PLUGIN_WEBHOOK_SECRET côté service. Sert à signer chaque appel.</div>
+                </div>
+                <div style="margin-bottom:2em">
+                    <button is="emby-button" type="button" class="raised emby-button" id="mrTestWebhook">
+                        <span>Tester le webhook</span>
+                    </button>
+                    <div class="fieldDescription">Enregistre d'abord tes réglages.</div>
+                </div>
+
                 <div>
                     <button is="emby-button" type="submit" class="raised button-submit block emby-button">
                         <span>Enregistrer</span>
@@ -115,7 +135,7 @@
             var page = document.querySelector('#MediaRequestsConfigPage');
             var IMG = 'https://image.tmdb.org/t/p/w154';
             var LABELS = { Pending: 'En attente', Approved: 'Acceptée', Denied: 'Refusée', Available: 'Disponible' };
-            var textFields = ['TmdbApiKey', 'Language', 'NtfyServer', 'NtfyTopic', 'NtfyToken', 'PublicServerUrl'];
+            var textFields = ['TmdbApiKey', 'Language', 'NtfyServer', 'NtfyTopic', 'NtfyToken', 'PublicServerUrl', 'WebhookUrl', 'WebhookSecret'];
             var filter = 'Pending';
             var requests = [];
 
@@ -203,6 +223,21 @@
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(link).then(function () { Dashboard.alert('Lien copié'); });
                 }
+            });
+
+            page.querySelector('#mrTestWebhook').addEventListener('click', function () {
+                var btn = this;
+                btn.disabled = true;
+                fetch(ApiClient.getUrl('MediaRequests/TestWebhook'), {
+                    method: 'POST',
+                    headers: { 'X-Emby-Token': ApiClient.accessToken() }
+                }).then(function (res) {
+                    return res.json().catch(function () { return {}; }).then(function (body) {
+                        Dashboard.alert((res.ok ? '✅ ' : '❌ ') + (body.message || ('Erreur ' + res.status)));
+                    });
+                }).catch(function () {
+                    Dashboard.alert('❌ Jellyfin ne répond pas.');
+                }).then(function () { btn.disabled = false; });
             });
 
             page.addEventListener('pageshow', function () {

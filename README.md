@@ -60,6 +60,27 @@ Au démarrage, le plugin ajoute sa balise `<script>` dans le `index.html` de jel
 | URL publique | — | Pour les liens et les boutons **Accepter / Refuser** dans ntfy |
 | ntfy (serveur, topic, token) | `https://ntfy.sh` | Notif téléphone. Topic vide = désactivé. Choisis un topic difficile à deviner. |
 
+## Webhook (optionnel)
+
+À chaque nouvelle demande, acceptation ou refus, le plugin envoie un `POST` JSON à l'URL configurée (page Demandes → Webhook) :
+
+```json
+{
+  "event": "request.created",
+  "sentAt": "2026-11-05T15:00:00Z",
+  "adminUrl": "https://jellyfin.mondomaine.fr/web/#/configurationpage?name=MediaRequests",
+  "request": {
+    "id": "…", "mediaType": "movie", "tmdbId": 14160, "title": "Là-haut", "year": "2009",
+    "note": null, "userName": "Paul", "status": "Pending", "createdAt": "…",
+    "posterUrl": "https://image.tmdb.org/t/p/w342/…"
+  }
+}
+```
+
+Événements : `request.created`, `request.approved`, `request.denied`, `test`. Avec un secret renseigné, chaque appel porte l'en-tête
+`X-MediaRequests-Signature: sha256=<HMAC-SHA256 du corps>`. C'est ce qu'utilise [MediaRequests-bridge](https://github.com/AntoineDemy/MediaRequests-bridge)
+pour les notifications WhatsApp et l'envoi vers Jellyseerr.
+
 ## Dans l'interface Jellyfin
 
 Tous les utilisateurs connectés sur la version web ont :
@@ -100,6 +121,7 @@ Il est affiché (avec un bouton Copier) en haut de la page Demandes du tableau d
 | `DELETE` | `/MediaRequests/Mine/{id}` | utilisateur (ses demandes en attente) |
 | `GET` | `/MediaRequests/All` | admin |
 | `GET` | `/MediaRequests/PendingCount` | admin (badge et rappel) |
+| `POST` | `/MediaRequests/TestWebhook` | admin (événement de test) |
 | `POST` | `/MediaRequests/{id}/Approve` · `/Deny` | admin |
 | `DELETE` | `/MediaRequests/{id}` | admin |
 | `POST` | `/MediaRequests/Action/{id}?decision=&token=` | boutons ntfy (token secret par demande) |

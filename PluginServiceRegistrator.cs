@@ -13,6 +13,7 @@ namespace Jellyfin.Plugin.MediaRequests
             serviceCollection.AddSingleton<RequestStore>();
             serviceCollection.AddSingleton<LibraryIndex>();
             serviceCollection.AddSingleton<TmdbClient>();
+            serviceCollection.AddSingleton<WebhookSender>();
             serviceCollection.AddSingleton<Notifier>();
             serviceCollection.AddSingleton<RequestService>();
         }

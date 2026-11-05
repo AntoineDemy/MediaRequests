@@ -9,36 +9,36 @@
     "imageUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/icon.png",
     "versions": [
       {
-        "version": "1.0.3.0",
-        "changelog": "Admins : badge avec le nombre de demandes en attente sur l'icône, et rappel « N demandes en attente · Voir » une fois par session.",
+        "version": "1.0.4.0",
+        "changelog": "Webhook signé (HMAC-SHA256) à chaque nouvelle demande, acceptation ou refus, pour brancher un service externe (pont WhatsApp + Jellyseerr). Bouton de test dans les réglages.",
         "targetAbi": "12.0.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.3.0_jellyfin-12.0.0.zip",
-        "checksum": "beebd130ec57f47b015c6f7042a4c07d",
-        "timestamp": "2026-11-05T15:04:35Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.4.0_jellyfin-12.0.0.zip",
+        "checksum": "23ae391584096076a8915ea1af98ac8f",
+        "timestamp": "2026-11-05T15:18:40Z"
       },
       {
-        "version": "1.0.3.0",
-        "changelog": "Admins : badge avec le nombre de demandes en attente sur l'icône, et rappel « N demandes en attente · Voir » une fois par session.",
+        "version": "1.0.4.0",
+        "changelog": "Webhook signé (HMAC-SHA256) à chaque nouvelle demande, acceptation ou refus, pour brancher un service externe (pont WhatsApp + Jellyseerr). Bouton de test dans les réglages.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.3.0_jellyfin-10.11.0.zip",
-        "checksum": "bc6453a1f91a8a04e93c3b6e25943194",
-        "timestamp": "2026-11-05T15:04:35Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.4.0_jellyfin-10.11.0.zip",
+        "checksum": "2df1fb98d94e673159a5da97a8cd4e90",
+        "timestamp": "2026-11-05T15:18:40Z"
       },
       {
-        "version": "1.0.3.0",
-        "changelog": "Admins : badge avec le nombre de demandes en attente sur l'icône, et rappel « N demandes en attente · Voir » une fois par session.",
+        "version": "1.0.4.0",
+        "changelog": "Webhook signé (HMAC-SHA256) à chaque nouvelle demande, acceptation ou refus, pour brancher un service externe (pont WhatsApp + Jellyseerr). Bouton de test dans les réglages.",
         "targetAbi": "10.10.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.3.0_jellyfin-10.10.0.zip",
-        "checksum": "c8959e72d542204b5a951189df00b6d9",
-        "timestamp": "2026-11-05T15:04:35Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.4.0_jellyfin-10.10.0.zip",
+        "checksum": "01a593d2d1f6eaf1248320c9bdd83ce5",
+        "timestamp": "2026-11-05T15:18:40Z"
       },
       {
-        "version": "1.0.3.0",
-        "changelog": "Admins : badge avec le nombre de demandes en attente sur l'icône, et rappel « N demandes en attente · Voir » une fois par session.",
+        "version": "1.0.4.0",
+        "changelog": "Webhook signé (HMAC-SHA256) à chaque nouvelle demande, acceptation ou refus, pour brancher un service externe (pont WhatsApp + Jellyseerr). Bouton de test dans les réglages.",
         "targetAbi": "10.9.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.3.0_jellyfin-10.9.0.zip",
-        "checksum": "c36e3726090c703c168f0c16458ba14d",
-        "timestamp": "2026-11-05T15:04:35Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.4.0_jellyfin-10.9.0.zip",
+        "checksum": "7e502d4deb318674d9187205c3519fdc",
+        "timestamp": "2026-11-05T15:18:40Z"
       }
     ]
   }

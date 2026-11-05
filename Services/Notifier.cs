@@ -43,6 +43,9 @@ namespace Jellyfin.Plugin.MediaRequests.Services
         private static string? PublicUrl =>
             string.IsNullOrWhiteSpace(Config.PublicServerUrl) ? null : Config.PublicServerUrl.TrimEnd('/');
 
+        /// <summary>Lien vers la page Demandes du tableau de bord (null sans URL publique).</summary>
+        public static string? AdminPageUrl => PublicUrl is null ? null : $"{PublicUrl}/web/#/configurationpage?name=MediaRequests";
+
         public async Task NotifyNewRequestAsync(MediaRequest r)
         {
             var kind = r.MediaType == "tv" ? "Série" : "Film";
@@ -127,7 +130,7 @@ namespace Jellyfin.Plugin.MediaRequests.Services
 
             if (PublicUrl is not null)
             {
-                payload["click"] = $"{PublicUrl}/web/#/configurationpage?name=MediaRequests";
+                payload["click"] = AdminPageUrl;
             }
 
             var server = string.IsNullOrWhiteSpace(Config.NtfyServer) ? "https://ntfy.sh" : Config.NtfyServer.TrimEnd('/');
