@@ -146,12 +146,126 @@
     }
   }
 
+  // ---------- Rappel admin : demandes en attente ----------
+  // Badge sur l'icône + message une fois par session. Ne concerne que les admins (l'API renvoie 403 aux autres).
+
+  var ADMIN_PAGE = '#/configurationpage?name=MediaRequests';
+  var REFRESH_MS = 2 * 60 * 1000;
+  var pending = 0;
+  var notAdminToken = null;
+  var lastFetch = 0;
+
+  function refreshPending(force) {
+    var token;
+    try { token = api().accessToken(); } catch (e) { return; }
+    if (!token || token === notAdminToken) return;
+    if (!force && Date.now() - lastFetch < 15000) return;
+    lastFetch = Date.now();
+
+    fetch(api().getUrl('MediaRequests/PendingCount'), { headers: { 'X-Emby-Token': token } })
+      .then(function (res) {
+        if (res.status === 401 || res.status === 403) {
+          notAdminToken = token;
+          return null;
+        }
+        return res.ok ? res.json() : null;
+      })
+      .then(function (data) {
+        if (!data) return;
+        pending = data.count || 0;
+        renderBadges();
+        if (pending > 0) showReminder(token);
+      })
+      .catch(function () { /* serveur injoignable : on réessaiera */ });
+  }
+
+  function renderBadges() {
+    var targets = document.querySelectorAll('.headerMediaRequests, .mrAppBarButton, .navMenuOption-mediaRequests');
+    for (var i = 0; i < targets.length; i++) {
+      var t = targets[i];
+      var badge = t.querySelector('.mrBadge');
+      if (!pending) {
+        if (badge) badge.remove();
+        continue;
+      }
+
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'mrBadge';
+        var inline = t.classList.contains('navMenuOption-mediaRequests');
+        badge.style.cssText = (inline
+          ? 'margin-left:auto;'
+          : 'position:absolute;top:0;right:0;transform:translate(30%,-20%);' +
+            'box-shadow:0 0 0 2px var(--jf-palette-background-default, #101010);') +
+          'min-width:16px;height:16px;padding:0 4px;border-radius:8px;font-size:10px;font-weight:700;line-height:16px;' +
+          'text-align:center;pointer-events:none;color:#fff;background:var(--jf-palette-primary-main, #00a4dc);';
+        if (!inline) t.style.position = 'relative';
+        t.appendChild(badge);
+      }
+
+      var text = pending > 99 ? '99+' : String(pending);
+      if (badge.textContent !== text) badge.textContent = text;
+      t.title = LABEL + ' · ' + pending + ' demande' + (pending > 1 ? 's' : '') + ' en attente';
+    }
+  }
+
+  function showReminder(token) {
+    var key = 'mediaRequests.reminder';
+    try {
+      if (sessionStorage.getItem(key) === token) return;
+      sessionStorage.setItem(key, token);
+    } catch (e) { /* stockage indisponible : on affiche quand même */ }
+
+    var old = document.getElementById('mrReminder');
+    if (old) old.remove();
+
+    var box = document.createElement('div');
+    box.id = 'mrReminder';
+    box.setAttribute('role', 'status');
+    box.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99999;display:flex;' +
+      'align-items:center;gap:14px;padding:12px 14px 12px 18px;border-radius:12px;max-width:92vw;' +
+      'box-shadow:0 8px 30px rgba(0,0,0,.45);font-weight:600;' +
+      'background:var(--jf-palette-background-paper, #262628);color:var(--jf-palette-text-primary, #fff);';
+
+    var text = document.createElement('span');
+    text.textContent = '🎬 ' + pending + ' demande' + (pending > 1 ? 's' : '') + ' en attente';
+
+    var view = document.createElement('button');
+    view.type = 'button';
+    view.textContent = 'Voir';
+    view.style.cssText = 'border:0;border-radius:8px;padding:7px 14px;font:inherit;cursor:pointer;color:#fff;' +
+      'background:var(--jf-palette-primary-main, #00a4dc);';
+    view.addEventListener('click', function () {
+      box.remove();
+      location.hash = ADMIN_PAGE;
+    });
+
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Fermer');
+    close.textContent = '✕';
+    close.style.cssText = 'border:0;background:none;color:inherit;opacity:.7;cursor:pointer;font:inherit;padding:4px;';
+    close.addEventListener('click', function () { box.remove(); });
+
+    box.appendChild(text);
+    box.appendChild(view);
+    box.appendChild(close);
+    document.body.appendChild(box);
+    setTimeout(function () { box.remove(); }, 12000);
+  }
+
+  // Après une décision sur la page Demandes, le compteur est rafraîchi au changement de page.
+  window.addEventListener('hashchange', function () { refreshPending(true); });
+  setInterval(function () { refreshPending(true); }, REFRESH_MS);
+
   function tick() {
     scheduled = false;
     if (!loggedIn()) return;
     addHeaderButton();
     addAppBarButton();
     addDrawerLink();
+    renderBadges();
+    refreshPending(false);
   }
 
   // L'interface Jellyfin redessine souvent le header et le menu : on ré-ajoute si besoin.

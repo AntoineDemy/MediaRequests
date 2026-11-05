@@ -66,6 +66,10 @@ Tous les utilisateurs connectés sur la version web ont :
 - une icône 🎬 dans la barre du haut, à côté de la recherche ;
 - une entrée « Demander un film ou une série » dans le menu latéral (Jellyfin 10.x ; la nouvelle interface de Jellyfin 12 n'a plus ce menu, seule l'icône du haut est ajoutée).
 
+Pour les **admins**, l'icône affiche un badge avec le nombre de demandes en attente, et un message
+« 🎬 N demandes en attente · Voir » apparaît une fois par session à l'ouverture de Jellyfin (le bouton mène à la page Demandes).
+Le compteur se met à jour à chaque changement de page et toutes les 2 minutes.
+
 Les deux ouvrent la page de demande par-dessus Jellyfin, déjà connectée (pas de mot de passe à retaper).
 Le bouton « Regarder » ferme la fenêtre et ouvre directement la fiche du film.
 
@@ -95,6 +99,7 @@ Il est affiché (avec un bouton Copier) en haut de la page Demandes du tableau d
 | `POST` | `/MediaRequests/Request` | utilisateur connecté |
 | `DELETE` | `/MediaRequests/Mine/{id}` | utilisateur (ses demandes en attente) |
 | `GET` | `/MediaRequests/All` | admin |
+| `GET` | `/MediaRequests/PendingCount` | admin (badge et rappel) |
 | `POST` | `/MediaRequests/{id}/Approve` · `/Deny` | admin |
 | `DELETE` | `/MediaRequests/{id}` | admin |
 | `POST` | `/MediaRequests/Action/{id}?decision=&token=` | boutons ntfy (token secret par demande) |

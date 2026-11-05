@@ -9,36 +9,36 @@
     "imageUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/icon.png",
     "versions": [
       {
-        "version": "1.0.2.0",
-        "changelog": "La fenêtre de demande reprend le thème Jellyfin actif (couleurs, police, fond), y compris les thèmes personnalisés comme ElegantFin.",
+        "version": "1.0.3.0",
+        "changelog": "Admins : badge avec le nombre de demandes en attente sur l'icône, et rappel « N demandes en attente · Voir » une fois par session.",
         "targetAbi": "12.0.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.2.0_jellyfin-12.0.0.zip",
-        "checksum": "0595fd38b6e9145b93f91af575d854d7",
-        "timestamp": "2026-11-05T14:49:04Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.3.0_jellyfin-12.0.0.zip",
+        "checksum": "beebd130ec57f47b015c6f7042a4c07d",
+        "timestamp": "2026-11-05T15:04:35Z"
       },
       {
-        "version": "1.0.2.0",
-        "changelog": "La fenêtre de demande reprend le thème Jellyfin actif (couleurs, police, fond), y compris les thèmes personnalisés comme ElegantFin.",
+        "version": "1.0.3.0",
+        "changelog": "Admins : badge avec le nombre de demandes en attente sur l'icône, et rappel « N demandes en attente · Voir » une fois par session.",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.2.0_jellyfin-10.11.0.zip",
-        "checksum": "aeaa79f26e728decb22857722003c1a7",
-        "timestamp": "2026-11-05T14:49:04Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.3.0_jellyfin-10.11.0.zip",
+        "checksum": "bc6453a1f91a8a04e93c3b6e25943194",
+        "timestamp": "2026-11-05T15:04:35Z"
       },
       {
-        "version": "1.0.2.0",
-        "changelog": "La fenêtre de demande reprend le thème Jellyfin actif (couleurs, police, fond), y compris les thèmes personnalisés comme ElegantFin.",
+        "version": "1.0.3.0",
+        "changelog": "Admins : badge avec le nombre de demandes en attente sur l'icône, et rappel « N demandes en attente · Voir » une fois par session.",
         "targetAbi": "10.10.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.2.0_jellyfin-10.10.0.zip",
-        "checksum": "de4b82ea58dd5e2494f3438fa3390b4c",
-        "timestamp": "2026-11-05T14:49:04Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.3.0_jellyfin-10.10.0.zip",
+        "checksum": "c8959e72d542204b5a951189df00b6d9",
+        "timestamp": "2026-11-05T15:04:35Z"
       },
       {
-        "version": "1.0.2.0",
-        "changelog": "La fenêtre de demande reprend le thème Jellyfin actif (couleurs, police, fond), y compris les thèmes personnalisés comme ElegantFin.",
+        "version": "1.0.3.0",
+        "changelog": "Admins : badge avec le nombre de demandes en attente sur l'icône, et rappel « N demandes en attente · Voir » une fois par session.",
         "targetAbi": "10.9.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.2.0_jellyfin-10.9.0.zip",
-        "checksum": "5153d2468440b6da01777fdc87541c07",
-        "timestamp": "2026-11-05T14:49:04Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.3.0_jellyfin-10.9.0.zip",
+        "checksum": "c36e3726090c703c168f0c16458ba14d",
+        "timestamp": "2026-11-05T15:04:35Z"
       }
     ]
   }

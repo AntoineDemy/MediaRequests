@@ -146,6 +146,17 @@ namespace Jellyfin.Plugin.MediaRequests.Api
 
         // ---------- Admin ----------
 
+        /// <summary>Nombre de demandes en attente (badge et rappel admin dans l'interface web).</summary>
+        [HttpGet("PendingCount")]
+        [Authorize(Policy = Policies.RequiresElevation)]
+        public async Task<ActionResult> PendingCount()
+        {
+            var all = await _store.GetAllAsync().ConfigureAwait(false);
+            // Une demande dont le titre est déjà arrivé dans Jellyfin est affichée "Disponible" : on ne la compte pas.
+            var count = all.Count(r => r.Status == RequestStatus.Pending && _library.Find(r.MediaType, r.TmdbId) is null);
+            return Ok(new { count });
+        }
+
         [HttpGet("All")]
         [Authorize(Policy = Policies.RequiresElevation)]
         public async Task<ActionResult<IEnumerable<MediaRequestDto>>> All()
