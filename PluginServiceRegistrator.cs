@@ -15,7 +15,6 @@ namespace Jellyfin.Plugin.MediaRequests
             serviceCollection.AddSingleton<TmdbClient>();
             serviceCollection.AddSingleton<Notifier>();
             serviceCollection.AddSingleton<RequestService>();
-            serviceCollection.AddHostedService<IndexHtmlWatcher>();
         }
     }
 }

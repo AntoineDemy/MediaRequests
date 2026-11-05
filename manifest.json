@@ -9,35 +9,35 @@
     "imageUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/icon.png",
     "versions": [
       {
-        "version": "1.0.1.0",
-        "changelog": "Le bouton revient tout seul si un autre plugin (ex. MediaBarEnhanced) réécrit index.html et efface la balise.",
+        "version": "1.0.0.0",
+        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
         "targetAbi": "12.0.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.1.0_jellyfin-12.0.0.zip",
-        "checksum": "c8d4f54183da1b0183b6326fa950d460",
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-12.0.0.zip",
+        "checksum": "84aff8aeeb9a82757fb9f4c39cc0dd02",
         "timestamp": "2026-11-05T14:35:41Z"
       },
       {
-        "version": "1.0.1.0",
-        "changelog": "Le bouton revient tout seul si un autre plugin (ex. MediaBarEnhanced) réécrit index.html et efface la balise.",
+        "version": "1.0.0.0",
+        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.1.0_jellyfin-10.11.0.zip",
-        "checksum": "09a6acbabcf63e42438688d0ea8ba8fa",
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.11.0.zip",
+        "checksum": "f98d080c7f7aba970c57e01207475a64",
         "timestamp": "2026-11-05T14:35:41Z"
       },
       {
-        "version": "1.0.1.0",
-        "changelog": "Le bouton revient tout seul si un autre plugin (ex. MediaBarEnhanced) réécrit index.html et efface la balise.",
+        "version": "1.0.0.0",
+        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
         "targetAbi": "10.10.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.1.0_jellyfin-10.10.0.zip",
-        "checksum": "61fc1cac64be1b4ef213c240212a02cc",
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.10.0.zip",
+        "checksum": "d1219f9f0bf4313f5780b569e9a2de3d",
         "timestamp": "2026-11-05T14:35:41Z"
       },
       {
-        "version": "1.0.1.0",
-        "changelog": "Le bouton revient tout seul si un autre plugin (ex. MediaBarEnhanced) réécrit index.html et efface la balise.",
+        "version": "1.0.0.0",
+        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
         "targetAbi": "10.9.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.1.0_jellyfin-10.9.0.zip",
-        "checksum": "3b0732a1d315000cfb449d10b90c8856",
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.9.0.zip",
+        "checksum": "096abd57e176bcb4e291e1239eeda0f7",
         "timestamp": "2026-11-05T14:35:41Z"
       }
     ]
