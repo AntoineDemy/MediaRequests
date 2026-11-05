@@ -70,6 +70,12 @@ namespace Jellyfin.Plugin.MediaRequests
         }
 
         /// <summary>
+        /// Puts the script tag back if it is missing (called again after startup and whenever index.html changes,
+        /// because other plugins rewriting index.html at the same time can drop it).
+        /// </summary>
+        internal void EnsureScript() => UpdateIndexHtml(inject: true);
+
+        /// <summary>
         /// Adds (or removes) the requests.js script tag in jellyfin-web's index.html.
         /// </summary>
         private void UpdateIndexHtml(bool inject)
