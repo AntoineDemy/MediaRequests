@@ -9,36 +9,36 @@
     "imageUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/icon.png",
     "versions": [
       {
-        "version": "1.0.0.0",
-        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
+        "version": "1.0.1.0",
+        "changelog": "Bouton de demande ajouté dans la nouvelle barre du haut de Jellyfin 12 (l'ancienne barre est masquée dans cette version).",
         "targetAbi": "12.0.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-12.0.0.zip",
-        "checksum": "84aff8aeeb9a82757fb9f4c39cc0dd02",
-        "timestamp": "2026-11-05T14:35:41Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.1.0_jellyfin-12.0.0.zip",
+        "checksum": "c26d7304510d7c27a65804badfc43356",
+        "timestamp": "2026-11-05T14:44:18Z"
       },
       {
-        "version": "1.0.0.0",
-        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
+        "version": "1.0.1.0",
+        "changelog": "Bouton de demande ajouté dans la nouvelle barre du haut de Jellyfin 12 (l'ancienne barre est masquée dans cette version).",
         "targetAbi": "10.11.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.11.0.zip",
-        "checksum": "f98d080c7f7aba970c57e01207475a64",
-        "timestamp": "2026-11-05T14:35:41Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.1.0_jellyfin-10.11.0.zip",
+        "checksum": "81d9ad62b21d44de78fbee373a59fb02",
+        "timestamp": "2026-11-05T14:44:18Z"
       },
       {
-        "version": "1.0.0.0",
-        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
+        "version": "1.0.1.0",
+        "changelog": "Bouton de demande ajouté dans la nouvelle barre du haut de Jellyfin 12 (l'ancienne barre est masquée dans cette version).",
         "targetAbi": "10.10.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.10.0.zip",
-        "checksum": "d1219f9f0bf4313f5780b569e9a2de3d",
-        "timestamp": "2026-11-05T14:35:41Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.1.0_jellyfin-10.10.0.zip",
+        "checksum": "84ce5c63bef197f6a0faca1ffe2f08f7",
+        "timestamp": "2026-11-05T14:44:18Z"
       },
       {
-        "version": "1.0.0.0",
-        "changelog": "Première version : recherche TMDB, demandes de films et séries, notifications Jellyfin et ntfy. Bouton ajouté directement dans l'interface web (plus besoin de File Transformation).",
+        "version": "1.0.1.0",
+        "changelog": "Bouton de demande ajouté dans la nouvelle barre du haut de Jellyfin 12 (l'ancienne barre est masquée dans cette version).",
         "targetAbi": "10.9.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.0.0_jellyfin-10.9.0.zip",
-        "checksum": "096abd57e176bcb4e291e1239eeda0f7",
-        "timestamp": "2026-11-05T14:35:41Z"
+        "sourceUrl": "https://raw.githubusercontent.com/AntoineDemy/MediaRequests/main/releases/media-requests_1.0.1.0_jellyfin-10.9.0.zip",
+        "checksum": "499bafa321ba5fefe1a7c870495364cf",
+        "timestamp": "2026-11-05T14:44:18Z"
       }
     ]
   }

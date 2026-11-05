@@ -64,7 +64,7 @@ Au démarrage, le plugin ajoute sa balise `<script>` dans le `index.html` de jel
 
 Tous les utilisateurs connectés sur la version web ont :
 - une icône 🎬 dans la barre du haut, à côté de la recherche ;
-- une entrée « Demander un film ou une série » dans le menu latéral.
+- une entrée « Demander un film ou une série » dans le menu latéral (Jellyfin 10.x ; la nouvelle interface de Jellyfin 12 n'a plus ce menu, seule l'icône du haut est ajoutée).
 
 Les deux ouvrent la page de demande par-dessus Jellyfin, déjà connectée (pas de mot de passe à retaper).
 Le bouton « Regarder » ferme la fenêtre et ouvre directement la fiche du film.
